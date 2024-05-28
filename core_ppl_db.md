@@ -1,0 +1,13 @@
+# People Table related ER schema
+- addresses
+- cases
+- client_relationships (client)
+- communications
+- consents
+- contact_preferences
+- emr_patients (EHR patient)
+- enrollment_requests (has a person_id column)
+- insurances (has a person_id column)
+- personal_relationships (family member)
+- service_authorizations
+- share_events

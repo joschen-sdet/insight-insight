@@ -1,0 +1,130 @@
+# Test Preparation for Sprint 23
+
+- [CL-676](https://uniteus.atlassian.net/browse/CL-676)
+  - Create a local dev setup
+  - Set `EMPI_SERVICE_URL=http://1.2.3.4` in docker-compose.yml
+  - Monitor the core logs in the docker container
+  - Log in to the Web app
+  - Run the *New Client* command from plus at top right-hand corner of the Web App
+  - Make sure the EMPI service time out reaches 10 seconds
+- [CL-732](https://uniteus.atlassian.net/browse/CL-732)
+  - Log in to the Web app
+  - Run the *New Client* command from plus at top right-hand corner of the Web App
+  - Enter 01/01/1900 as client's birthday
+  - Click *Search Our Records*
+  - The model should display an error 
+- [CL-689](https://uniteus.atlassian.net/browse/CL-689)
+  - Get the provider's UUID
+  - Open https://devqa-widgets.uniteusdev.com/examples/devqa.html
+  - Enter the provider's UUID
+  - Enter 01/01/1900 as the client's birthday
+  - Fill out the Assistance Request form with the required fields
+  - Submit the form
+- [CL-720](https://uniteus.atlassian.net/browse/CL-720)
+  - Create a local dev setup
+  - Create an SQL statement to insert a record for
+    - a provider
+    - a person (people table)
+    - a client relationships
+  - Run the core maintenance script 
+  - Run SQL select statement to verify the client relationship does not exists
+- [CL-692](https://uniteus.atlassian.net/browse/CL-692)
+  - Create request JSON for different test cases
+    - With one existing provider and one address
+    - With one existing cc provider and one address
+    - With one existing provider and one address with "home" type, another with "work"
+    - With one existing cc provider and one address with "home" type, another with "work"
+  - Submit the requests with POST: /client_service/client 
+  - Check the response
+  - If the response returns 201 status code
+    - Check the core database for
+      - new record in the people table
+      - new record in the client_relationships table
+      - new record in the addresses table
+    - Log in the web app as employee of the provider
+    - Search for the newly created client
+      - verify address in the client profile tab
+- [CL-695](https://uniteus.atlassian.net/browse/CL-695)
+  - Consider testing this ticket with [CL-699](https://uniteus.atlassian.net/browse/CL-699)
+- [CL-699](https://uniteus.atlassian.net/browse/CL-699)
+  - Create local dev setup
+  - Create SQL statement to insert record into the people table
+    - client has *not yet consent* status
+  - Run the SQL statement twice
+  - Log in to the web app
+  - Select the client's dashboard
+  - Select the Merge the Actions menu
+  - The no clients created with the SQL statement should display.
+  - Change one client's status to *consented*
+  - Refresh the client's dashboard
+  - Select the Merge the Actions menu
+  - The no clients created with the SQL statement should display.
+  - Change another client's status to *consented*
+  - Refresh the client's dashboard
+  - Select the Merge the Actions menu
+  - The two clients created with the SQL statement should display.
+- [CL-701](https://uniteus.atlassian.net/browse/CL-701)
+  - Log in to the Web app
+  - Create a new client
+  - Get the client's UUID from the URL
+  - Send request with DELETE: /client_service/client/{client_UUID}
+  - Verify the response returns 200 status
+  - Verify the client_relationship does not exist
+  - Create a new client for two providers
+  - Send request with DELETE: /client_service/client/{client_UUID}
+  - Verify the response returns 200 status
+  - Verify the client_relationship does not exist
+- Sexuality/Sexual Orientation [CL-548](https://uniteus.atlassian.net/browse/CL-458), [CL-553](https://uniteus.atlassian.net/browse/CL-553), [CL-554](https://uniteus.atlassian.net/browse/CL-554)
+  - Which API should be tested? 
+    - Create
+    - Update
+  - Web app
+  - Create new client
+    - Log in to the web app
+    - Run the *New Client* command from plus at top right-hand corner of the Web App
+      - Enter all fields
+      - Select Search Our Records
+    - Fill out the required fields
+    - Click on the Sexual Orientation multiple select field
+      - Add 3 choices
+      - One other field and type in custom value(s)
+    - Save the client
+  - Edit existing client
+    - Log in to the web app
+    - Select the client dashboard
+    - Select a client
+    - Select the Profile tab
+    - Select the Sexual Orientation multiple select field
+      - Remove existing items
+      - Add 2 new items
+    - Save the client
+    - Check for the newly saved results
+- [CL-683](https://uniteus.atlassian.net/browse/CL-683)
+  - Search for same addresses and have same client, but different address id
+    - Insert a duplicate address to a client in database if needed
+  - Run the core maintenance script to remove the duplicate addresses
+  - Search again for the same addresses and the output should be none
+- [CL-284](https://uniteus.atlassian.net/browse/CL-284)
+  - Dev QA
+    - run [devqa-widgets](https://devqa-widgets.uniteusdev.com/examples/devqa.html) 
+    - enter provide A UUID
+    - Select Load widget
+    - Search for Military Affiliation field
+    - Set the value to "Military Member or Veteran"
+    - Search for the "Military Discharge" field.
+    - The field should be available
+    - Select a value for the "Military Discharge" field.
+    - Submit the form
+    - Log in to the web app, and open the newly submitted AR request
+    - Go to the face sheet and verify the discharge value. 
+  - Staging
+    -  Load Assistance Request widgets for a provider
+    - Search for Military Affiliation field
+    - Set the value to "Military Member or Veteran"
+    - Search for the "Military Discharge" field.
+    - The field should be available
+    - Select a value for the "Military Discharge" field.
+    - Submit the form
+    - Log in to the web app, and open the newly submitted AR request
+    - Go to the face sheet and verify the discharge value. 
+
